@@ -9,3 +9,4 @@ session.commit()
 session.refresh(new_user)
 
 print("✅ User added successfully!")
+session.close()
