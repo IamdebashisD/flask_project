@@ -2,11 +2,8 @@ import sys
 sys.path.append("C:/GitHub/flask_project") 
 from models.database import session
 from models.user_model import User
+from schemas.user_schema import user_schema
 
-new_user = User(name="John", email="john@example.com")
-session.add(new_user)
-session.commit()
-session.refresh(new_user)
-
-print("✅ User added successfully!")
-session.close()
+user = session.query(User).all()
+res = user_schema.dump(user)
+print(res)

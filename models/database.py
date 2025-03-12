@@ -1,12 +1,19 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv
 import os
 
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:62674123@localhost:3306/flaskApp_customer_db")
+# Load .env file
+load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Initialize SQLAlchemy engine
 engine = create_engine(DATABASE_URL, echo=True)
 
+# Create session
 sessionLocal = sessionmaker(bind=engine)
 session = sessionLocal()
 
+# Define Base for ORM models
 Base = declarative_base()
