@@ -12,7 +12,7 @@ def get_user():
         users = session.query(User).all()
         if not users:
             return jsonify({"message": "No users found", "users": []}), 200
-        return jsonify(user_schema.dump(users)), 200
+        return jsonify(user_schema.dump({"data": users})), 200
     
     except SQLAlchemyError as e:
         logging.error(f"Database Error: {str(e)}")  # Log error properly
