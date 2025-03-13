@@ -9,7 +9,9 @@ class UserSchema(ma.Schema):
     name = fields.Str(required=True, validate = validate.Length(min=2, max=20)) # Corrected validation
     email = fields.Email(required=True) # Ensures it's a valid email
 
-user_schema = UserSchema(many=True)
+
+user_schema = UserSchema() # Default is for a single user
+users_schema: UserSchema = UserSchema(many=True) # Correct way to handle multiple users
 
 
 @app.route('/validate', methods = ['POST'])
