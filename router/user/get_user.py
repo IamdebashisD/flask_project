@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models.database import session
 from models.user_model import User
-from schemas.user_schema import user_schema
+from schemas.user_schema import users_schema
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 
@@ -12,7 +12,13 @@ def get_user():
         users = session.query(User).all()
         if not users:
             return jsonify({"message": "No users found", "users": []}), 200
-        return jsonify(user_schema.dump({"data": users})), 200
+        
+        return jsonify({ 
+            "status": "success", 
+            "message": "Users fetched successfully", 
+            "total_user": len(users),
+            "data": users_schema.dump(users)
+            }), 200
     
     except SQLAlchemyError as e:
         logging.error(f"Database Error: {str(e)}")  # Log error properly
