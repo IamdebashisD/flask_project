@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from models.database import session
 from models.user_model import User
 from schemas.user_schema import user_schema
@@ -8,17 +8,18 @@ from marshmallow import ValidationError
 # create a Blueprint for user creation
 add_user_bp = Blueprint('add_user_bp', __name__)
 @add_user_bp.route('/add_user', methods =['POST'])
-def add_user():
+def add_user() -> Response:
+    """Creates a new user"""
     try:
         # Safely get JSON data
-        data = request.get_json()
+        data: dict = request.get_json()
         if not data:
-            return jsonify({"error": "Invalid json data!"}), 404
+            return jsonify({"error": "Invalid json data!"}), 400
         
         # Validate & deserialize input
         validate_data = user_schema.load(data)
         # create new user
-        new_user = User(name=validate_data['name'], email = validate_data['email'])
+        new_user = User(name = validate_data['name'], email = validate_data['email'])
         # Add user to session & commit
         session.add(new_user)
         session.commit()

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from models.database import session
 from models.user_model import User
 from schemas.user_schema import user_schema
@@ -7,10 +7,11 @@ from sqlalchemy.exc import SQLAlchemyError
 
 update_user_bp = Blueprint('/update_user_bp', __name__)
 @update_user_bp.route('/update_user/<int:id>', methods=['PUT'])
-def update_user(id):
+def update_user(id) -> Response:
+    """Update an existing user"""
     try:    
         with session.begin():
-            user = session.query(User).filter_by(id=id).first()
+            user: User | None = session.query(User).filter_by(id=id).first()
             if not user:
                 return jsonify({"error": "User not found"}), 404
 

@@ -7,7 +7,8 @@ delete_user_bp = Blueprint("delete_user_bp", __name__)
 
 @delete_user_bp.route("/delete_user/<int:id>", methods=["DELETE"])
 def delete_user(id):
-    user = session.query(User).filter_by(id=id).first()
+    '''Delete an existing user'''
+    user: User | None = session.query(User).filter_by(id=id).first()
     
     if not user:
         return jsonify({"error": "User not found"}), 404

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, Response
 from models.database import session
 from models.user_model import User
 from schemas.user_schema import users_schema
@@ -7,7 +7,8 @@ import logging
 
 get_user_bp = Blueprint('get_user_bp', __name__)
 @get_user_bp.route('/get_user', methods=['GET'])
-def get_user():
+def get_user() -> Response:
+    '''Fetch all user'''
     try:
         users = session.query(User).all()
         if not users:
