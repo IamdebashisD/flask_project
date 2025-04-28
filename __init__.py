@@ -20,7 +20,7 @@ swagger_config = {
     "static_url_path": "/static",
     "static_folder": "swagger",
     "swagger_ui": True,
-    "specs_route": "/docs/" 
+    "specs_route": "/docs" 
 }
 
 def create_app():
