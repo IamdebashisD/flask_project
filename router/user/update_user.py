@@ -4,10 +4,12 @@ from models.user_model import User
 from schemas.user_schema import user_schema
 from marshmallow import ValidationError
 from sqlalchemy.exc import SQLAlchemyError
+from flasgger import swag_from
 
 update_user_bp = Blueprint('/update_user_bp', __name__)
-@update_user_bp.route('/update_user/<int:id>', methods=['PUT'])
-def update_user(id) -> Response:
+@update_user_bp.route('/update_user/<string:id>', methods=['PUT'])
+@swag_from('swagger/update_users.yml')  # must match exact file path
+def update_user(id: str) -> Response:
     """Update an existing user"""
     try:    
         with session.begin():
@@ -20,7 +22,7 @@ def update_user(id) -> Response:
             user.email = data.get('email', user.email)
             session.commit()
 
-        return jsonify({"Message": "User updated successfully!", "user": user_schema.dump(user)}), 200
+        return jsonify({"error_code":False, "message": "User updated successfully!", "data": user_schema.dump(user)}), 200
     
     except ValidationError as err:
         return jsonify({"errors": err.messages}), 400  # Invalid input
@@ -31,8 +33,6 @@ def update_user(id) -> Response:
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    finally:
-        session.close()
 
 
 

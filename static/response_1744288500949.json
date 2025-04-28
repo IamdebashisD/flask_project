@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "email": "das.debashis@gmail.com",
+      "name": "Debashis Das"
+    },
+    {
+      "email": "ghosh.aditya@gmail.com",
+      "name": "Aditya Ghosh"
+    },
+    {
+      "email": "ghosh.jeet@gmail.com",
+      "name": "Jeet Ghosh"
+    },
+    {
+      "email": "brathwaite.carlos123@gmail.com",
+      "name": "Carlos Brathwaite"
+    },
+    {
+      "email": "rohansingh10@gmail.com",
+      "name": "Rohan Singh"
+    }
+  ],
+  "message": "Users fetched successfully",
+  "status": "success",
+  "total_user": 5
+}

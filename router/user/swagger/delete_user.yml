@@ -1,0 +1,24 @@
+---
+tags:
+  - Users
+summary: Delete a user by ID
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+    description: The UUID of the user
+responses:
+  200:
+    description: User deleted successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User deleted
+  404:
+    description: User not found

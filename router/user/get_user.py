@@ -4,9 +4,11 @@ from models.user_model import User
 from schemas.user_schema import users_schema
 from sqlalchemy.exc import SQLAlchemyError
 import logging
+from flasgger import swag_from
 
 get_user_bp = Blueprint('get_user_bp', __name__)
-@get_user_bp.route('/get_user', methods=['GET'])
+@get_user_bp.route('/get_users', methods=['GET'])
+@swag_from('swagger/get_users.yml')
 def get_user() -> Response:
     '''Fetch all user'''
     try:

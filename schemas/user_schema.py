@@ -1,25 +1,13 @@
-from flask import Flask, request, jsonify
 from flask_marshmallow import Marshmallow
-from marshmallow import fields, validate, ValidationError
+from marshmallow import fields, validate
 
-app = Flask(__name__)
-ma = Marshmallow(app)
+ma: Marshmallow = Marshmallow()
 
 class UserSchema(ma.Schema):
     name = fields.Str(required=True, validate = validate.Length(min=2, max=20)) # Corrected validation
     email = fields.Email(required=True) # Ensures it's a valid email
 
-user_schema = UserSchema() # Default is for a single user
+# Created two instances of user schema 
+user_schema: UserSchema = UserSchema() # Default is for a single user
 users_schema: UserSchema = UserSchema(many=True) # Correct way to handle multiple users
 
-@app.route('/validate', methods = ['POST'])
-def validate_user():
-    try:
-        data = request.get_json()
-        error = user_schema.load(data)
-        if error:
-            return jsonify(error), 404
-        return jsonify({"message": "Validation successful!", "data": data}), 200
-    
-    except ValidationError as err:
-        return jsonify({"errors": err.messages}), 400 

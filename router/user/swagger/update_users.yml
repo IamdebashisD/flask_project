@@ -1,0 +1,50 @@
+---
+tags:
+  - Users
+summary: Update a user by ID
+description: Update user data like name or email using user ID.
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: string
+    description: UUID of the user to update
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Rohan Singh
+        email:
+          type: string
+          example: rohan@example.com
+responses:
+  200:
+    description: User updated successfully
+    schema:
+      type: object
+      properties:
+        Message:
+          type: string
+          example: User updated successfully!
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              example: b145c936-4f60-4ec7-a9a7-e871a7c4e3a3
+            name:
+              type: string
+              example: Rohan Singh
+            email:
+              type: string
+              example: rohan@example.com
+  400:
+    description: Invalid input
+  404:
+    description: User not found
+  500:
+    description: Internal server error

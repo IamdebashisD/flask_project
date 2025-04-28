@@ -1,0 +1,36 @@
+---
+tags:
+  - Users
+summary: Get a user by ID
+parameters:
+  - name: id
+    in: path
+    required: true
+    schema:
+      type: string
+    description: The UUID of the user
+responses:
+  200:
+    description: User data found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            data:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Debashis Das
+                email:
+                  type: string
+                  example: deb@example.com
+            error_code:
+              type: boolean
+              example: false
+            msg:
+              type: string
+              example: User fetch successfully!
+  404:
+    description: User not found

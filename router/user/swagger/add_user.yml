@@ -1,0 +1,34 @@
+---
+tags:
+  - Users
+summary: Add a new user
+description: Create a user by providing name and email
+consumes:
+  - application/json
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          example: Debashis Das
+        email:
+          type: string
+          example: deb@example.com
+responses:
+  201:
+    description: User created successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User created
+  400:
+    description: Missing required fields

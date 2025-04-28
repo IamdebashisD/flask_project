@@ -2,10 +2,12 @@ from flask import Blueprint, request, jsonify
 from models.database import session
 from models.user_model import User
 from sqlalchemy.exc import SQLAlchemyError
+from flasgger import swag_from
 
 delete_user_bp = Blueprint("delete_user_bp", __name__)
 
-@delete_user_bp.route("/delete_user/<int:id>", methods=["DELETE"])
+@delete_user_bp.route("/delete_user/<string:id>", methods=["DELETE"])
+@swag_from('swagger/delete_user.yml')
 def delete_user(id):
     '''Delete an existing user'''
     user: User | None = session.query(User).filter_by(id=id).first()
