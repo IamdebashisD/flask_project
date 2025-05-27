@@ -5,10 +5,12 @@ from schemas.user_schema import users_schema
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 from flasgger import swag_from
+from flask_jwt_extended import jwt_required
 
 get_user_bp = Blueprint('get_user_bp', __name__)
 @get_user_bp.route('/get_users', methods=['GET'])
 @swag_from('swagger/get_users.yml')
+@jwt_required()
 def get_user() -> Response:
     '''Fetch all user'''
     try:

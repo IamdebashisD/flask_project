@@ -12,4 +12,4 @@ def truncate_table():
         sess.commit()
     print('Table truncated successfully...')
 
-truncate_table()
+# truncate_table()

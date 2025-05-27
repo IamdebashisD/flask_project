@@ -4,6 +4,7 @@ from models.user_model import User
 from schemas.user_schema import user_schema
 from marshmallow import ValidationError
 from flasgger import swag_from
+from flask_jwt_extended import create_access_token
 
 
 # create a Blueprint for user creation
@@ -32,11 +33,15 @@ def add_user() -> Response:
         # Add user to session & commit
         session.add(new_user)
         session.commit()
+        '''create access token'''
+        access_token = create_access_token(identity=new_user.email)
+        print("access tooken=",access_token)
 
         return jsonify({
             "error_code": False, 
             "Mmessagee": "User added successfully!",
-            "data": user_schema.dump(new_user)
+            "access_token": access_token,
+            "data": user_schema.dump(new_user),
         }), 201
         
     except ValidationError as err: return jsonify({

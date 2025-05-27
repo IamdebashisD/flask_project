@@ -5,10 +5,12 @@ from schemas.user_schema import user_schema
 from sqlalchemy.exc import SQLAlchemyError
 import logging
 from flasgger import swag_from
+from flask_jwt_extended import jwt_required
 
 get_user_byId_bp = Blueprint('get_user_byId_bp', __name__)
 @get_user_byId_bp.route('/get_user_byId/<string:id>', methods= ['GET'])
 @swag_from('swagger/get_user_by_id.yml')
+@jwt_required()
 def get_user_byId(id) -> Response:
     """Fetch a user by ID"""
     try:
